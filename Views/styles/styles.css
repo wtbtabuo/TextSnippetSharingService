@@ -44,3 +44,18 @@ button:hover {
     background-color: #45a049;
 }
 
+.options {
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+}
+
+.options label {
+    margin-right: 10px;
+}
+
+select, input[type="text"] {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}

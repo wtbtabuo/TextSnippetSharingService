@@ -13,11 +13,47 @@
     <main>
         <section>
             <form id="pasteForm">
-                <textarea id="pasteText" placeholder="Enter your code here..."></textarea>
+                <textarea id="pasteText" placeholder="Enter your text here..."></textarea>
+
+                <!-- 言語選択メニュー -->
+                <div class="options">
+                    <label for="languageSelect">Select Language:</label>
+                    <select id="languageSelect">
+                        <option value="plaintext">Plain Text</option>
+                        <option value="python">Python</option>
+                        <option value="java">Java</option>
+                        <option value="cpp">C++</option>
+                        <option value="javascript">JavaScript</option>
+                        <option value="csharp">C#</option>
+                        <option value="go">Go</option>
+                        <option value="rust">Rust</option>
+                    </select>
+                </div>
+
+                <!-- 保持期間選択メニュー -->
+                <div class="options">
+                    <label for="retentionSelect">Retention Period:</label>
+                    <select id="retentionSelect">
+                        <option value="15min">15 minutes</option>
+                        <option value="1hour">1 hour</option>
+                        <option value="1day">1 day</option>
+                        <option value="forever">Keep Forever</option>
+                    </select>
+                </div>
+
+                <!-- タイトル入力フィールドの追加 -->
+                <div class="options">
+                    <label for="titleInput">Title:</label>
+                    <input type="text" id="titleInput" placeholder="Enter a title...">
+                </div>
+
                 <button type="submit">Submit</button>
             </form>
         </section>
     </main>
+    <footer>
+        <p>&copy; 2024 Text Snippet Sharing Service. All rights reserved.</p>
+    </footer>
     <script src="script.js"></script>
 </body>
 </html>
