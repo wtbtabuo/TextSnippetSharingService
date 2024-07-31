@@ -8,18 +8,13 @@ use Response\Render\JSONRenderer;
 
 return [
     'api/textSnippet'=>function(){
-        $order = ValidationHelper::string($_POST['uid']??null);
-        $order = ValidationHelper::string($_POST['code']??null);
-        $order = ValidationHelper::string($_POST['code_language']??null);
-        // $order = ValidationHelper::string($_POST['is_expired']??null);
-        // $order = ValidationHelper::string($_POST['expired_at']??null);
-        $textSnippet = DatabaseHelper::postTextSnippet();
+        $inputData = json_decode(file_get_contents('php://input'), true);
+        $uid = ValidationHelper::string($inputData['uid']??null);
+        $text = ValidationHelper::string($inputData['text']??null);
+        $language = ValidationHelper::string($inputData['language']??null);
+        $retention = ValidationHelper::string($inputData['retention']??null);
+        $title = ValidationHelper::string($inputData['title']??null);
+        $textSnippet = DatabaseHelper::postTextSnippet($uid, $text, $language, $retention, $title);
         return new JSONRenderer(['textSnippet'=>$textSnippet]);
-    },
-    'api/parts/performance'=>function(){
-        $order = ValidationHelper::string($_GET['order']??null);
-        $type = ValidationHelper::string($_GET['type']??null);
-        $performance = DatabaseHelper::getPerformance($order, $type);
-        return new JSONRenderer(['performance'=>$performance]);
-    },
+    }
 ];

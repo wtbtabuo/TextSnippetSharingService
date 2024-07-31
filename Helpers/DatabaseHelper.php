@@ -7,16 +7,35 @@ use Exception;
 
 class DatabaseHelper
 {
-    public static function postTextSnippet(): array{
+    public static function postTextSnippet(string $uid, string $code, string $code_language, string $expired_at, string $title): array {
         $db = new MySQLWrapper();
 
-        $stmt = $db->prepare("SELECT * FROM computer_parts ORDER BY RAND() LIMIT 1");
+        // データベースにインサートするSQL文
+        $stmt = $db->prepare("INSERT INTO text_snap (uid, code, code_language, expired_at, title, is_expired) VALUES (?, ?, ?, ?, ?, ?)");
+        
+        // プレースホルダに値をバインド
+        $isExpired = 0; // false を表す整数値
+        $stmt->bind_param("sssssi", $uid, $code, $code_language, $expired_at, $title, $isExpired);
+        
+        // クエリを実行
+        if (!$stmt->execute()) {
+            throw new Exception('Failed to insert data into text_snap table: ' . $stmt->error);
+        }
+        
+        // 挿入されたレコードのIDを取得
+        $insertedId = $stmt->insert_id;
+        
+        // インサートされたデータを再取得して返す（例として）
+        $stmt = $db->prepare("SELECT * FROM text_snap WHERE id = ?");
+        $stmt->bind_param("i", $insertedId);
         $stmt->execute();
         $result = $stmt->get_result();
-        $part = $result->fetch_assoc();
-
-        if (!$part) throw new Exception('Could not find a single part in database');
-
-        return $part;
+        $data = $result->fetch_assoc();
+        
+        if (!$data) {
+            throw new Exception('Could not retrieve the inserted record from database');
+        }
+        
+        return $data;
     }
 }
