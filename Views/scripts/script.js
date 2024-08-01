@@ -44,7 +44,7 @@ document.getElementById('pasteForm').addEventListener('submit', function(event) 
         })
         .then(response => response.json())
         .then(data => {
-            alert(`Text submitted successfully! UUID: ${uid}`);
+            alert(`Text submitted successfully!`);
         })
         .catch((error) => {
             console.error('Error:', error);
