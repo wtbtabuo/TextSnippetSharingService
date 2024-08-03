@@ -42,9 +42,16 @@ document.getElementById('pasteForm').addEventListener('submit', function(event) 
             },
             body: JSON.stringify(data)
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
-            alert(`Text submitted successfully!`);
+            alert('Text submitted successfully!');
+            // detail.htmlに遷移
+            window.location.href = `http://localhost:5500/Views/detail.html?uid=${uid}`;
         })
         .catch((error) => {
             console.error('Error:', error);

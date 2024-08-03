@@ -16,5 +16,17 @@ return [
         $title = ValidationHelper::string($inputData['title']??null);
         $textSnippet = DatabaseHelper::postTextSnippet($uid, $text, $language, $retention, $title);
         return new JSONRenderer(['textSnippet'=>$textSnippet]);
+    },
+
+    'api/textSnippet/text' => function() {
+        $uid = ValidationHelper::string($_GET['uid'] ?? null);
+
+        $textSnippet = DatabaseHelper::getTextSnippetByUid($uid);
+        if ($textSnippet) {
+            return new JSONRenderer(['textSnippet' => $textSnippet]);
+        } else {
+            // データが見つからなかった場合の処理
+            return new JSONRenderer(['error' => 'Text snippet not found'], 404);
+        }
     }
 ];

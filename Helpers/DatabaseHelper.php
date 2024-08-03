@@ -38,4 +38,31 @@ class DatabaseHelper
         
         return $data;
     }
+
+    public static function getTextSnippetByUid(string $uid): array {
+        $db = new MySQLWrapper();
+
+        $stmt = $db->prepare("SELECT * FROM text_snap WHERE uid = ?");
+
+        if (!$stmt) {
+            throw new Exception('Failed to prepare statement: ' . $db->error);
+        }
+
+        $stmt->bind_param("s", $uid);
+        
+        // クエリを実行
+        if (!$stmt->execute()) {
+            throw new Exception('Failed to get data from text_snap table: ' . $stmt->error);
+        }
+
+        $result = $stmt->get_result();
+        $data = $result->fetch_assoc();
+
+        
+        if (!$data) {
+            throw new Exception('Could not retrieve the inserted record from database');
+        }
+        
+        return $data;
+    }
 }
