@@ -7,15 +7,14 @@ use Exception;
 
 class DatabaseHelper
 {
-    public static function postTextSnippet(string $uid, string $code, string $code_language, string $expired_at, string $title): array {
+    public static function postTextSnippet(string $uid, string $code, string $code_language, $expired_at, string $title): array {
         $db = new MySQLWrapper();
 
         // データベースにインサートするSQL文
-        $stmt = $db->prepare("INSERT INTO text_snap (uid, code, code_language, expired_at, title, is_expired) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt = $db->prepare("INSERT INTO text_snap (uid, code, code_language, title, expired_at) VALUES (?, ?, ?, ?, ?)");
         
         // プレースホルダに値をバインド
-        $isExpired = 0; // false を表す整数値
-        $stmt->bind_param("sssssi", $uid, $code, $code_language, $expired_at, $title, $isExpired);
+        $stmt->bind_param("sssss", $uid, $code, $code_language, $title, $expired_at);
         
         // クエリを実行
         if (!$stmt->execute()) {

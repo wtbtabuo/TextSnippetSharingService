@@ -16,7 +16,6 @@ class CreateTextSnapTable implements SchemaMigration
                 code TEXT NOT NULL,
                 code_language VARCHAR(255) NOT NULL,
                 title VARCHAR(255),
-                is_expired BOOL NOT NULL,
                 expired_at DATETIME,
                 created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
             )"

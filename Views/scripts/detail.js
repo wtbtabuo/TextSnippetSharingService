@@ -12,16 +12,25 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .then(response => response.json())
     .then(data => {
+        const expiredAt = data.textSnippet.expired_at;
+        
+        if (expiredAt !== null) {
+            const expiredDate = new Date(expiredAt.replace(" ", "T"));
+            const adjustedExpiredDate = new Date(expiredDate.getTime() + 9 * 60 * 60 * 1000);
+            const now = new Date(Date.now());
+
+            if (adjustedExpiredDate < now) {
+                document.querySelector('section').innerHTML = "<p>Expired Retention Period</p>";
+                return;
+            }
+        }
+
         const codeElement = document.getElementById('text');
         codeElement.textContent = data.textSnippet.code;
-
         const languageClass = `language-${data.textSnippet.code_language}`;
-        // const languageClass = 'plaintext';
         codeElement.classList.add(languageClass);
-
         document.getElementById('title').innerText = "Title: " + data.textSnippet.title;
-        document.getElementById('retention').innerText = "Delete Time: " + data.textSnippet.expired_at;
-
+        document.getElementById('codeType').innerText = "code type: " + data.textSnippet.code_language;
         hljs.highlightElement(codeElement);
     })
     .catch((error) => {
