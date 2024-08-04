@@ -60,3 +60,7 @@ select, input[type="text"] {
     border-radius: 5px;
     border: 1px solid #ccc;
 }
+
+code {
+    font-family: 'Courier New', Courier, monospace;
+}

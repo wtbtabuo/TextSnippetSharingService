@@ -12,11 +12,17 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .then(response => response.json())
     .then(data => {
-        // 取得したデータを表示
-        document.getElementById('title').innerText = data.title;
-        document.getElementById('text').innerText = data.text;
-        document.getElementById('language').innerText = data.language;
-        document.getElementById('retention').innerText = data.retention;
+        const codeElement = document.getElementById('text');
+        codeElement.textContent = data.textSnippet.code;
+
+        const languageClass = `language-${data.textSnippet.code_language}`;
+        // const languageClass = 'plaintext';
+        codeElement.classList.add(languageClass);
+
+        document.getElementById('title').innerText = "Title: " + data.textSnippet.title;
+        document.getElementById('retention').innerText = "Delete Time: " + data.textSnippet.expired_at;
+
+        hljs.highlightElement(codeElement);
     })
     .catch((error) => {
         console.error('Error:', error);

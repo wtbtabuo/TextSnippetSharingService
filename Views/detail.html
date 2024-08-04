@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text Snippet Detail</title>
     <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="../highlight/styles/tokyo-night-dark.css">
+    <script src="../highlight/highlight.js"></script>
 </head>
 <body>
     <header>
@@ -12,10 +14,11 @@
     </header>
     <main>
         <section>
-            <h2 id="title">Title</h2>
-            <p id="text">Text</p>
-            <p id="language">Language: <span id="languageValue"></span></p>
-            <p id="retention">Retention Period: <span id="retentionValue"></span></p>
+            <pre><code id="text"></code></pre>
+            <ul>
+                <li id="title"></li>
+                <li id="retention"></li>
+            </ul>
         </section>
     </main>
     <footer>
